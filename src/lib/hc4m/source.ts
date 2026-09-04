@@ -8,6 +8,7 @@
 import raw from "@/data/aug01-2026.json";
 import type {
   BuyerAttempt,
+  BuyerReconciliation,
   BuyerStatus,
   InsightsDataset,
   LastStage,
@@ -70,7 +71,7 @@ const dataset: InsightsDataset = {
       httpStatus: typeof a.http === "number" ? a.http : null,
     }),
   ),
-  reconciliation: raw.reconciliation,
+  reconciliation: raw.reconciliation as unknown as BuyerReconciliation[],
   definitions: raw.definitions as [string, string][],
 };
 
