@@ -781,18 +781,6 @@
  ],
  "reconciliation": [
   {
-   "buyerFull": "Buyer",
-   "eligiblePosts": "Eligible Posts",
-   "accepted": "Accepted",
-   "errors": "Errors",
-   "duplicates": "Duplicates",
-   "grossRevenue": "Gross Revenue",
-   "acceptanceRate": "Acceptance Rate",
-   "pings": "Pings",
-   "pingAccepted": "Ping Accepted",
-   "pingFailed": "Ping Failed"
-  },
-  {
    "buyerFull": "Content Cognition - Production",
    "eligiblePosts": 0,
    "accepted": 0,
