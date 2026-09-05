@@ -10,33 +10,70 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuyersRouteImport } from './routes/buyers'
+import { Route as LeadsRouteImport } from './routes/leads'
+import { Route as BuyersIndexRouteImport } from './routes/buyers.index'
+import { Route as BuyersBuyerRouteImport } from './routes/buyers.$buyer'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuyersRoute = BuyersRouteImport.update({
+  id: '/buyers',
+  path: '/buyers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeadsRoute = LeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyersIndexRoute = BuyersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BuyersRoute,
+} as any)
+const BuyersBuyerRoute = BuyersBuyerRouteImport.update({
+  id: '/$buyer',
+  path: '/$buyer',
+  getParentRoute: () => BuyersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buyers': typeof BuyersRouteWithChildren
+  '/leads': typeof LeadsRoute
+  '/buyers/$buyer': typeof BuyersBuyerRoute
+  '/buyers/': typeof BuyersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/leads': typeof LeadsRoute
+  '/buyers/$buyer': typeof BuyersBuyerRoute
+  '/buyers': typeof BuyersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buyers': typeof BuyersRouteWithChildren
+  '/leads': typeof LeadsRoute
+  '/buyers/$buyer': typeof BuyersBuyerRoute
+  '/buyers/': typeof BuyersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/buyers' | '/leads' | '/buyers/$buyer' | '/buyers/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/leads' | '/buyers/$buyer' | '/buyers'
+  id: '__root__' | '/' | '/buyers' | '/leads' | '/buyers/$buyer' | '/buyers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuyersRoute: typeof BuyersRouteWithChildren
+  LeadsRoute: typeof LeadsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +85,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buyers': {
+      id: '/buyers'
+      path: '/buyers'
+      fullPath: '/buyers'
+      preLoaderRoute: typeof BuyersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leads': {
+      id: '/leads'
+      path: '/leads'
+      fullPath: '/leads'
+      preLoaderRoute: typeof LeadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buyers/': {
+      id: '/buyers/'
+      path: '/'
+      fullPath: '/buyers/'
+      preLoaderRoute: typeof BuyersIndexRouteImport
+      parentRoute: typeof BuyersRoute
+    }
+    '/buyers/$buyer': {
+      id: '/buyers/$buyer'
+      path: '/$buyer'
+      fullPath: '/buyers/$buyer'
+      preLoaderRoute: typeof BuyersBuyerRouteImport
+      parentRoute: typeof BuyersRoute
+    }
   }
 }
 
+interface BuyersRouteChildren {
+  BuyersBuyerRoute: typeof BuyersBuyerRoute
+  BuyersIndexRoute: typeof BuyersIndexRoute
+}
+
+const BuyersRouteChildren: BuyersRouteChildren = {
+  BuyersBuyerRoute: BuyersBuyerRoute,
+  BuyersIndexRoute: BuyersIndexRoute,
+}
+
+const BuyersRouteWithChildren =
+  BuyersRoute._addFileChildren(BuyersRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuyersRoute: BuyersRouteWithChildren,
+  LeadsRoute: LeadsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
