@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ClientChart } from "./ClientChart";
 import { statusChartColor } from "./StatusBadge";
 import { currency } from "@/lib/hc4m/metrics";
 import type { BuyerStatus } from "@/lib/hc4m/types";
@@ -35,7 +36,8 @@ export function AcceptanceByBuyerChart({
   data: { buyer: string; accepted: number }[];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ClientChart height={280}>
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
         <XAxis type="number" allowDecimals={false} {...axis} />
         <YAxis type="category" dataKey="buyer" width={130} {...axis} />
@@ -48,6 +50,7 @@ export function AcceptanceByBuyerChart({
         />
       </BarChart>
     </ResponsiveContainer>
+    </ClientChart>
   );
 }
 
@@ -57,7 +60,8 @@ export function OutcomeBreakdownChart({
   data: { status: BuyerStatus; count: number }[];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ClientChart height={280}>
+    <ResponsiveContainer width="100%" height="100%">
       <PieChart>
         <Pie data={data} dataKey="count" nameKey="status" innerRadius={60} outerRadius={100}>
           {data.map((d) => (
@@ -68,6 +72,7 @@ export function OutcomeBreakdownChart({
         <Tooltip {...tooltipStyle} />
       </PieChart>
     </ResponsiveContainer>
+    </ClientChart>
   );
 }
 
@@ -77,9 +82,10 @@ export function BidComparisonChart({
   data: { buyer: string; avgBid: number; highestBid: number }[];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ClientChart height={280}>
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data} margin={{ left: 8, right: 8 }}>
-        <XAxis dataKey="buyer" interval={0} tickFormatter={(v: string) => v.split(" ")[0]} {...axis} />
+        <XAxis dataKey="buyer" interval={0} tickFormatter={(v: string) => v.split(" ")[0] ?? v} {...axis} />
         <YAxis tickFormatter={(v: number) => `$${v}`} {...axis} />
         <Tooltip formatter={(v: number) => currency(v)} {...tooltipStyle} />
         <Legend wrapperStyle={{ fontSize: "0.78rem" }} />
@@ -87,6 +93,7 @@ export function BidComparisonChart({
         <Bar dataKey="highestBid" name="Highest bid" fill="var(--chart-4)" radius={[6, 6, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
+    </ClientChart>
   );
 }
 
@@ -96,7 +103,8 @@ export function RevenueByBuyerChart({
   data: { buyer: string; totalValue: number }[];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={280}>
+    <ClientChart height={280}>
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
         <XAxis type="number" tickFormatter={(v: number) => `$${v}`} {...axis} />
         <YAxis type="category" dataKey="buyer" width={130} {...axis} />
@@ -109,6 +117,7 @@ export function RevenueByBuyerChart({
         />
       </BarChart>
     </ResponsiveContainer>
+    </ClientChart>
   );
 }
 
@@ -140,7 +149,8 @@ export function ReasonBreakdownChart({
   data: { reason: string; count: number }[];
 }) {
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ClientChart height={300}>
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
         <XAxis type="number" allowDecimals={false} {...axis} />
         <YAxis type="category" dataKey="reason" width={200} {...axis} />
@@ -148,5 +158,6 @@ export function ReasonBreakdownChart({
         <Bar dataKey="count" name="Buyer attempts" fill="var(--chart-3)" radius={[0, 6, 6, 0]} />
       </BarChart>
     </ResponsiveContainer>
+    </ClientChart>
   );
 }

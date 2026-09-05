@@ -6,18 +6,18 @@ export const currency = (n: number) =>
 
 export const percent = (n: number) => `${(n * 100).toFixed(1)}%`;
 
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/** Deterministic formatting of the campaign's local (ET) timestamps. */
 export function formatDateTime(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  return `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}, ${formatTime(iso)}`;
 }
 
 export function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const h = Number(iso.slice(11, 13));
+  const suffix = h >= 12 ? "PM" : "AM";
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12}:${iso.slice(14, 16)} ${suffix}`;
 }
 
 export interface OverviewKpis {
