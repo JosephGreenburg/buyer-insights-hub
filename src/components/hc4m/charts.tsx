@@ -79,7 +79,7 @@ export function BidComparisonChart({
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} margin={{ left: 8, right: 8 }}>
-        <XAxis dataKey="buyer" interval={0} tickFormatter={(v: string) => v.split(" ")[0]} {...axis} />
+        <XAxis dataKey="buyer" interval={0} tickFormatter={(v: string) => v.split(" ")[0] ?? v} {...axis} />
         <YAxis tickFormatter={(v: number) => `$${v}`} {...axis} />
         <Tooltip formatter={(v: number) => currency(v)} {...tooltipStyle} />
         <Legend wrapperStyle={{ fontSize: "0.78rem" }} />
