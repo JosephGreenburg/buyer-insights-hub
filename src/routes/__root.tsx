@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { BarChart3 } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
@@ -77,21 +78,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "HC4M Buyer Insights" },
+      {
+        name: "description",
+        content:
+          "Buyer-level lead performance reporting for Home Cash 4 Me: acceptances, bids, revenue and outcomes.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -114,13 +118,68 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+const navLinkClass =
+  "rounded-md px-3 py-2 text-sm font-medium text-primary-foreground/70 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen bg-background">
+        <header className="border-b border-primary/40 bg-primary">
+          <div className="mx-auto flex max-w-[104rem] flex-wrap items-center justify-between gap-3 px-5 py-3">
+            <Link to="/" className="flex items-center gap-2.5">
+              <span className="flex size-9 items-center justify-center rounded-lg bg-primary-foreground/10">
+                <BarChart3 className="size-5 text-primary-foreground" aria-hidden />
+              </span>
+              <span>
+                <span className="block font-display text-base font-bold text-primary-foreground">
+                  HC4M Buyer Insights
+                </span>
+                <span className="block text-xs text-primary-foreground/60">
+                  Home Cash 4 Me · buyer response reporting
+                </span>
+              </span>
+            </Link>
+            <nav className="flex items-center gap-1" aria-label="Main">
+              <Link
+                to="/"
+                className={navLinkClass}
+                activeOptions={{ exact: true }}
+                activeProps={{
+                  className:
+                    "rounded-md bg-primary-foreground/15 px-3 py-2 text-sm font-semibold text-primary-foreground",
+                }}
+              >
+                Overview
+              </Link>
+              <Link
+                to="/leads"
+                className={navLinkClass}
+                activeProps={{
+                  className:
+                    "rounded-md bg-primary-foreground/15 px-3 py-2 text-sm font-semibold text-primary-foreground",
+                }}
+              >
+                Leads
+              </Link>
+              <Link
+                to="/buyers"
+                className={navLinkClass}
+                activeProps={{
+                  className:
+                    "rounded-md bg-primary-foreground/15 px-3 py-2 text-sm font-semibold text-primary-foreground",
+                }}
+              >
+                Buyers
+              </Link>
+            </nav>
+          </div>
+        </header>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </div>
     </QueryClientProvider>
   );
 }
