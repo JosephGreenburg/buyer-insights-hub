@@ -22,6 +22,31 @@ type SortKey = "leadAt" | "bid" | "price" | "buyer" | "status";
 
 const ALL = "__all__";
 
+function SortHeader({
+  label,
+  sortKey,
+  activeSort,
+  onSort,
+}: {
+  label: string;
+  sortKey: SortKey;
+  activeSort: SortKey;
+  onSort: (key: SortKey) => void;
+}) {
+  return (
+    <button
+      onClick={() => onSort(sortKey)}
+      className={cn(
+        "inline-flex items-center gap-1 hover:text-foreground",
+        activeSort === sortKey && "text-foreground",
+      )}
+    >
+      {label}
+      <ArrowUpDown className="size-3" aria-hidden />
+    </button>
+  );
+}
+
 export function LeadTable({
   attempts,
   showBuyerColumn = true,
@@ -89,19 +114,6 @@ export function LeadTable({
     setSort((prev) =>
       prev.key === key ? { key, dir: prev.dir === "asc" ? "desc" : "asc" } : { key, dir: "desc" },
     );
-
-  const SortHeader = ({ label, k }: { label: string; k: SortKey }) => (
-    <button
-      onClick={() => toggleSort(k)}
-      className={cn(
-        "inline-flex items-center gap-1 hover:text-foreground",
-        sort.key === k && "text-foreground",
-      )}
-    >
-      {label}
-      <ArrowUpDown className="size-3" aria-hidden />
-    </button>
-  );
 
   return (
     <section className="rounded-xl border border-border bg-card shadow-card">
@@ -214,25 +226,35 @@ export function LeadTable({
           <thead className="sticky top-0 z-10 bg-secondary/95 backdrop-blur">
             <tr className="text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               <th className="px-4 py-3">
-                <SortHeader label="Date / time" k="leadAt" />
+                <SortHeader label="Date / time" sortKey="leadAt" activeSort={sort.key} onSort={toggleSort} />
               </th>
               <th className="px-4 py-3">Lead ID</th>
               {showBuyerColumn ? (
                 <th className="px-4 py-3">
-                  <SortHeader label="Buyer" k="buyer" />
+                  <SortHeader label="Date / time" sortKey="leadAt" activeSort={sort.key} onSort={toggleSort} />
                 </th>
               ) : null}
               <th className="px-4 py-3">
-                <SortHeader label="Buyer status" k="status" />
+                <SortHeader label="Date / time" sortKey="leadAt" activeSort={sort.key} onSort={toggleSort} />
               </th>
               <th className="px-4 py-3">Last stage</th>
               <th className="px-4 py-3">Ping response</th>
               <th className="px-4 py-3 text-right">
-                <SortHeader label="Bid" k="bid" />
+                <SortHeader label="Date / time" sortKey="leadAt" activeSort={sort.key} onSort={toggleSort} />
               </th>
               <th className="px-4 py-3">Lead sent?</th>
               <th className="px-4 py-3 text-right">
-                <SortHeader label="Purchase price" k="price" />
+                <SortHeader
+
+  label="Date / time"
+
+  sortKey="leadAt"
+
+  activeSort={sort.key}
+
+  onSort={toggleSort}
+
+/>
               </th>
               <th className="px-4 py-3">Outcome detail</th>
             </tr>
