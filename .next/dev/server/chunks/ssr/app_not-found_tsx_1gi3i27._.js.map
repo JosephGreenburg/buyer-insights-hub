@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Applications/MAMP/htdocs/buyer-insights-hub/app/not-found.tsx"],"sourcesContent":["import Link from \"next/link\";\n\nexport default function NotFound() {\n  return (\n    <div className=\"flex min-h-[70vh] items-center justify-center bg-background px-4\">\n      <div className=\"max-w-md text-center\">\n        <h1 className=\"text-7xl font-bold text-foreground\">404</h1>\n        <h2 className=\"mt-4 text-xl font-semibold text-foreground\">Page not found</h2>\n        <p className=\"mt-2 text-sm text-muted-foreground\">The page you're looking for doesn't exist or has been moved.</p>\n        <Link href=\"/\" className=\"mt-6 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground\">Go home</Link>\n      </div>\n    </div>\n  );\n}\n"],"names":["NotFound","className","href"],"mappings":";;;;;AAAA;;;AAEe,SAASA;IACtB,qBACE,8OAAC;QAAIC,WAAU;kBACb,cAAA,8OAAC;YAAIA,WAAU;;8BACb,8OAAC;oBAAGA,WAAU;8BAAqC;;;;;;8BACnD,8OAAC;oBAAGA,WAAU;8BAA6C;;;;;;8BAC3D,8OAAC;oBAAEA,WAAU;8BAAqC;;;;;;8BAClD,8OAAC,0LAAI;oBAACC,MAAK;oBAAID,WAAU;8BAA+F;;;;;;;;;;;;;;;;;AAIhI"}}]
+}
